@@ -1,0 +1,35 @@
+{
+  "name": "phasergame",
+  "version": "1.0.0",
+  "description": "Mini-Application for Travis-CI to build. This will use Phaser HTML Game Builder",
+  "main": "index.js",
+  "scripts": {
+    "build:webpack": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PSUSWENG894/PhaserGame.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "PSUSWENG894",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PSUSWENG894/PhaserGame/issues"
+  },
+  "homepage": "https://github.com/PSUSWENG894/PhaserGame#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "copy-webpack-plugin": "^4.5.1",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^3.0.3",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "phaser": "^3.9.0"
+  }
+}
