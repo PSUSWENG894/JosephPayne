@@ -1,35 +1,34 @@
 {
-  "name": "phasergame",
+  "name": "phaser-game",
   "version": "1.0.0",
-  "description": "Mini-Application for Travis-CI to build. This will use Phaser HTML Game Builder",
+  "description": "",
+  "author": "SWENG894",
   "main": "index.js",
   "scripts": {
-    "build:webpack": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack --mode=development --display-error-message",
+    "build:production": "webpack  --mode=production --config webpack.production.config.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PSUSWENG894/PhaserGame.git"
-  },
-  "keywords": [
-    "game"
-  ],
-  "author": "PSUSWENG894",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/PSUSWENG894/PhaserGame/issues"
-  },
-  "homepage": "https://github.com/PSUSWENG894/PhaserGame#readme",
+  "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.24.4",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
-    "webpack": "^4.2.0",
-    "webpack-cli": "^3.0.3",
-    "webpack-dev-server": "^3.1.4"
+    "eslint": "^4.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "expose-loader": "^0.7.3",
+    "html-webpack-plugin": "^3.2.0",
+    "raw-loader": "^0.5.1",
+    "webpack": "^4.10.0",
+    "webpack-cli": "^3.0.1"
   },
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
-    "phaser": "^3.9.0"
+    "phaser": "3.9.0",
+    "phaser-animated-tiles": "^2.0.2"
   }
 }
