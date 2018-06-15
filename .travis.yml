@@ -21,7 +21,5 @@ matrix:
         github-token: $GITHUB_TOKEN
         keep-history: true
         verbose: true
-        file: build/*
-        # project: ./build/
         on:
           branch: master
