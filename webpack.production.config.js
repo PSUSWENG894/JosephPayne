@@ -39,8 +39,7 @@ module.exports = {
     }),*/
     //new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' /* chunkName= */, filename: 'js/vendor.bundle.js' /* filename= */ }),
     new HtmlWebpackPlugin({
-    new CleanWebpackPlugin(['PhaserGame']),
-    filename: path.resolve(__dirname, 'build', 'index.html'),
+      filename: path.resolve(__dirname, 'build', 'index.html'),
       template: './src/index.html',
       chunks: ['vendor', 'app'],
       chunksSortMode: 'manual',
