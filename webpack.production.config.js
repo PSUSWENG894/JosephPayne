@@ -22,13 +22,13 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '/'),
     publicPath: './',
     filename: 'js/bundle.js'
   },
   plugins: [
     definePlugin,
-    new CleanWebpackPlugin(['build']),
+    new CleanWebpackPlugin(['/']),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     /*new webpack.optimize.UglifyJsPlugin({
       drop_console: true,
