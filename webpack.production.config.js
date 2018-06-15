@@ -22,13 +22,13 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'PhaserGame'),
     publicPath: 'PhaserGame',
     filename: 'js/bundle.js'
   },
   plugins: [
     definePlugin,
-    new CleanWebpackPlugin(['build']),
+    new CleanWebpackPlugin(['PhaserGame']),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     /*new webpack.optimize.UglifyJsPlugin({
       drop_console: true,
@@ -39,7 +39,8 @@ module.exports = {
     }),*/
     //new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' /* chunkName= */, filename: 'js/vendor.bundle.js' /* filename= */ }),
     new HtmlWebpackPlugin({
-      filename: 'index.html', // path.resolve(__dirname, 'build', 'index.html'),
+    new CleanWebpackPlugin(['PhaserGame']),
+    filename: path.resolve(__dirname, 'build', 'index.html'),
       template: './src/index.html',
       chunks: ['vendor', 'app'],
       chunksSortMode: 'manual',
