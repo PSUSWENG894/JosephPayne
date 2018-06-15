@@ -19,5 +19,6 @@ matrix:
         github-token: $GITHUB_TOKEN
         keep-history: true
         verbose: true
+        file: build/**/*
         on:
           branch: master
