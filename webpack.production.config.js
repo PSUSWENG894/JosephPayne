@@ -23,7 +23,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: './',
+    publicPath: 'PhaserGame',
     filename: 'js/bundle.js'
   },
   plugins: [
