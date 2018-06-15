@@ -5,6 +5,9 @@ matrix:
       node_js:
         - "node"
         - "iojs"
+      cache:
+        directories:
+          - node_modules
       install:
         - npm install -g codecov
       script:
@@ -20,5 +23,6 @@ matrix:
         keep-history: true
         verbose: true
         file: build/**/*
+        project: ./build/
         on:
           branch: master
