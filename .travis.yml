@@ -23,3 +23,6 @@ matrix:
         verbose: true
         on:
           branch: master
+        local-dir: dist
+        target-branch: gh-pages
+        verbose: true
