@@ -7,8 +7,8 @@ import {
 
 const gameConfig = {
     type: Phaser.AUTO,
-    width: 680,
-    height: 400,
+    width: window.innerWidth * window.devicePixelRatio,
+    height: window.innerHeight * window.devicePixelRatio,
     physics: {
         default: 'arcade',
         arcade: {

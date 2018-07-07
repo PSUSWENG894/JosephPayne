@@ -18,16 +18,17 @@ export class SimpleScene extends Phaser.Scene {
   }
 
   create() {
-
-    this.add.image(400, 300, 'sky');
+    // this.add.image(400, 300, 'sky');
     this.platforms = this.physics.add.staticGroup();
-    this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this.platforms.maxSize = window.innerWidth;
+    this.platforms.create(900, 900, 'ground').setScale(2).refreshBody();
     this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
+    this.platforms.create(90, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
+    this.platforms.create(500, 100, 'ground');
 
     this.player = this.physics.add.sprite(100, 450, 'dude');
-    this.player.setBounce(0.2);
+    this.player.setBounce(0.02);
     this.player.setCollideWorldBounds(true);
 
     this.anims.create({
@@ -90,7 +91,12 @@ export class SimpleScene extends Phaser.Scene {
 
   update() {
     if (this.gameOver) {
-      return;
+      this.resetBombs();
+      this.resetStars();
+      this.player.setRandomPosition();
+      this.player.anims.play('turn');
+      this.physics.resume();
+      this.gameOver = false;
     }
 
     if (this.cursors.left.isDown) {
@@ -147,6 +153,12 @@ export class SimpleScene extends Phaser.Scene {
   resetStars() {
     this.stars.children.iterate((child) => {
       child.enableBody(true, child.x, 0, true, true);
+    });
+  }
+
+  resetBombs() {
+    this.bombs.children.iterate((child) => {
+      child.disableBody(true, child.x, 0, true, true);
     });
   }
 }
