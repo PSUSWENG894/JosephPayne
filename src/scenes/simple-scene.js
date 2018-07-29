@@ -1,12 +1,13 @@
+import PlatformGenerator from '../services/platform-generator.service'
 export class SimpleScene extends Phaser.Scene {
   constructor(test) {
     super({
       key: "SimpleScene"
     });
+    this.platformGenerator = new PlatformGenerator();
   }
 
   preload() {
-    this.load.image("sky", "assets/sky.png");
     this.load.image("ground", "assets/platform.png");
     this.load.image("star", "assets/star.png");
     this.load.image("bomb", "assets/bomb.png");
@@ -19,9 +20,7 @@ export class SimpleScene extends Phaser.Scene {
   create() {
     const maxHeight = this.cache.game.canvas.height;
     const maxWidth = this.cache.game.canvas.width;
-    this.platforms = this.physics.add.staticGroup();
-    this.platforms.maxSize = maxWidth;
-    this.platforms.create(maxWidth * 0.5, maxHeight, "ground");
+    this.platforms = this.platformGenerator.createLevel(this.physics, maxHeight, maxWidth);
 
     this.player = this.physics.add.sprite(100, 450, "dude");
     this.player.setBounce(0.02);
@@ -39,12 +38,10 @@ export class SimpleScene extends Phaser.Scene {
 
     this.anims.create({
       key: "turn",
-      frames: [
-        {
-          key: "dude",
-          frame: 4
-        }
-      ],
+      frames: [{
+        key: "dude",
+        frame: 4
+      }],
       frameRate: 20
     });
 
@@ -63,20 +60,21 @@ export class SimpleScene extends Phaser.Scene {
       key: "star",
       repeat: 11,
       setXY: {
-        x: 12,
+        x: 0,
         y: 0,
-        stepX: 70
+        stepX: 70,
+        stepY: 50
       }
     });
 
-    this.stars.children.iterate(function(child) {
+    this.stars.children.iterate(function (child) {
       child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
     });
 
     this.bombs = this.physics.add.group();
     this.scoreText = this.add.text(16, 16, "score: 0", {
       fontSize: "32px",
-      fill: "#000"
+      fill: "#fff"
     });
     this.score = 0;
 
@@ -97,24 +95,24 @@ export class SimpleScene extends Phaser.Scene {
       null,
       this
     );
+    console.log(this)
   }
 
   update() {
     if (this.gameOver) {
       this.resetBombs();
       this.resetStars();
-      this.player.setRandomPosition();
       this.player.anims.play("turn");
       this.physics.resume();
       this.gameOver = false;
     }
 
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
+      this.player.setVelocityX(-this.platformGenerator.playerXVelocity);
 
       this.player.anims.play("left", true);
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
+      this.player.setVelocityX(this.platformGenerator.playerXVelocity);
 
       this.player.anims.play("right", true);
     } else {
@@ -127,16 +125,14 @@ export class SimpleScene extends Phaser.Scene {
       this.cursors.up.isDown &&
       (this.player.body.blocked.down || this.player.body.touching.down)
     ) {
-      this.player.setVelocityY(-420);
+      this.player.setVelocityY(-this.platformGenerator.playerYVelocity);
     }
   }
 
   collectStar(player, star) {
     star.disableBody(true, true);
+    this.updateScore(10);
 
-    //  Add and update the score
-    this.score += 10;
-    this.scoreText.setText(`Score ${this.score}`);
     this.addBombs(
       this.stars.children.entries.filter(x => x.active !== true).length
     );
@@ -147,21 +143,21 @@ export class SimpleScene extends Phaser.Scene {
 
   hitBomb(player, bomb) {
     this.physics.pause();
-    this.player.setTint(0xff0000);
     this.player.anims.play("turn");
     this.gameOver = true;
+    this.updateScore(-25);
   }
 
   addBombs(starCount) {
     let inactiveStarCountToDropBombs = 4;
     if (isNaN(starCount) || starCount >= inactiveStarCountToDropBombs) {
       let x =
-        this.player.x < 400
-          ? Phaser.Math.Between(400, 800)
-          : Phaser.Math.Between(0, 400);
+        this.player.x < 400 ?
+        Phaser.Math.Between(400, 800) :
+        Phaser.Math.Between(0, 400);
 
       let bomb = this.bombs.create(x, 16, "bomb");
-      bomb.setBounce(1);
+      bomb.setBounce(0.6);
       bomb.setCollideWorldBounds(true);
       bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
       bomb.allowGravity = false;
@@ -178,5 +174,11 @@ export class SimpleScene extends Phaser.Scene {
     this.bombs.children.iterate(child => {
       child.disableBody(true, child.x, 0, true, true);
     });
+  }
+
+  updateScore(numberToAdd) {
+    //  Add and update the score
+    this.score += numberToAdd;
+    this.scoreText.setText(`Score ${this.score}`);
   }
 }
